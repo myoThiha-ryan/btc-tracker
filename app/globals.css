@@ -381,3 +381,168 @@ header span {
   color: #f85149;
   border: 1px solid #f8514930;
 }
+
+/* ── Orders panel ────────────────────────────── */
+.orders-panel {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 700px;
+  margin-top: 1.5rem;
+}
+
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.orders-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.orders-title h2 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e6edf3;
+}
+
+.testnet-badge {
+  background: #f0b42920;
+  color: #f0b429;
+  border: 1px solid #f0b42960;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  letter-spacing: 0.05em;
+}
+
+.orders-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.orders-refreshed {
+  font-size: 0.75rem;
+  color: #8b949e;
+}
+
+.refresh-btn {
+  background: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #e6edf3;
+  font-size: 0.82rem;
+  padding: 0.35rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.refresh-btn:hover:not(:disabled) { background: #30363d; }
+.refresh-btn:disabled { opacity: 0.5; cursor: default; }
+
+.orders-error,
+.orders-empty,
+.orders-loading {
+  font-size: 0.82rem;
+  color: #8b949e;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.orders-error { color: #f85149; }
+
+.orders-table-wrap {
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.orders-table th {
+  text-align: left;
+  color: #8b949e;
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 0.75rem 0.6rem;
+  border-bottom: 1px solid #21262d;
+  white-space: nowrap;
+}
+
+.orders-table td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #21262d;
+  color: #e6edf3;
+  vertical-align: middle;
+}
+
+.orders-table tr:last-child td { border-bottom: none; }
+.orders-table tr:hover td { background: #1c2128; }
+
+.orders-time {
+  color: #e6edf3;
+  white-space: nowrap;
+}
+
+.orders-time span {
+  display: block;
+  font-size: 0.72rem;
+  color: #8b949e;
+}
+
+.orders-muted { color: #8b949e; }
+
+.orders-num {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.orders-subtext {
+  font-size: 0.72rem;
+  color: #8b949e;
+}
+
+.orders-id {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #8b949e;
+}
+
+/* Side badges in table */
+.side-badge {
+  display: inline-block;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+}
+
+.side-badge.buy  { background: #2ea04320; color: #2ea043; border: 1px solid #2ea04350; }
+.side-badge.sell { background: #f8514920; color: #f85149; border: 1px solid #f8514950; }
+
+/* Order status */
+.order-status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-filled   { color: #2ea043; }
+.status-canceled { color: #8b949e; }
+.status-partial  { color: #f0b429; }
+.status-new      { color: #58a6ff; }
+.status-rejected { color: #f85149; }

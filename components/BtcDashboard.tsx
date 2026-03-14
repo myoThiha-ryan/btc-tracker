@@ -2,6 +2,7 @@
 
 import { useBinanceTicker } from '@/hooks/useBinanceTicker';
 import AlertPanel from './AlertPanel';
+import OrdersPanel from './OrdersPanel';
 import PriceCard from './PriceCard';
 import StatsGrid from './StatsGrid';
 import StatusIndicator from './StatusIndicator';
@@ -23,6 +24,7 @@ export default function BtcDashboard() {
       <PriceCard ticker={ticker} />
       <StatsGrid ticker={ticker} />
       <AlertPanel currentPrice={ticker?.price ?? null} />
+      <OrdersPanel />
     </>
   );
 }
