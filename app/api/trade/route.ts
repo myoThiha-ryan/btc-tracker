@@ -1,9 +1,6 @@
 import crypto from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
-
-const BINANCE_BASE = process.env.BINANCE_TESTNET === 'true'
-  ? 'https://testnet.binance.vision'
-  : 'https://api.binance.com';
+import { BINANCE_BASE, binanceHeaders } from '@/lib/binance';
 
 const REQUIRED_ENV = ['BINANCE_API_KEY', 'BINANCE_API_SECRET'] as const;
 
@@ -65,10 +62,7 @@ export async function POST(req: NextRequest) {
 
   const binanceRes = await fetch(`${BINANCE_BASE}/api/v3/order`, {
     method: 'POST',
-    headers: {
-      'X-MBX-APIKEY': process.env.BINANCE_API_KEY!,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
+    headers: binanceHeaders(process.env.BINANCE_API_KEY!),
     body: params.toString(),
   });
 

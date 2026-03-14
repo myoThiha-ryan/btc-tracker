@@ -1,9 +1,6 @@
 import crypto from 'crypto';
 import { NextResponse } from 'next/server';
-
-const BINANCE_BASE = process.env.BINANCE_TESTNET === 'true'
-  ? 'https://testnet.binance.vision'
-  : 'https://api.binance.com';
+import { BINANCE_BASE, binanceHeaders } from '@/lib/binance';
 
 function sign(queryString: string): string {
   return crypto
@@ -28,7 +25,7 @@ export async function GET() {
   params.append('signature', sign(params.toString()));
 
   const res = await fetch(`${BINANCE_BASE}/api/v3/allOrders?${params.toString()}`, {
-    headers: { 'X-MBX-APIKEY': process.env.BINANCE_API_KEY! },
+    headers: binanceHeaders(process.env.BINANCE_API_KEY!),
     cache: 'no-store',
   });
 
