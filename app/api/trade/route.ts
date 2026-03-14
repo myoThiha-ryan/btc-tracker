@@ -60,21 +60,31 @@ export async function POST(req: NextRequest) {
 
   params.append('signature', sign(params.toString()));
 
-  const binanceRes = await fetch(`${BINANCE_BASE}/api/v3/order`, {
-    method: 'POST',
-    headers: binanceHeaders(process.env.BINANCE_API_KEY!),
-    body: params.toString(),
-  });
+  let binanceRes: Response;
+  try {
+    binanceRes = await fetch(`${BINANCE_BASE}/api/v3/order`, {
+      method: 'POST',
+      headers: binanceHeaders(process.env.BINANCE_API_KEY!),
+      body: params.toString(),
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Network error reaching proxy/Binance';
+    console.error('[trade] Fetch error:', msg);
+    return NextResponse.json({ error: `Could not connect to Binance: ${msg}` }, { status: 502 });
+  }
 
-  const data = await binanceRes.json() as {
-    orderId?: number;
-    status?: string;
-    side?: string;
-    executedQty?: string;
-    cummulativeQuoteQty?: string;
-    msg?: string;
-    code?: number;
-  };
+  const text = await binanceRes.text();
+  if (!text) {
+    return NextResponse.json({ error: 'Empty response from Binance' }, { status: 502 });
+  }
+
+  let data: { orderId?: number; status?: string; side?: string; executedQty?: string; cummulativeQuoteQty?: string; msg?: string; code?: number };
+  try {
+    data = JSON.parse(text);
+  } catch {
+    console.error('[trade] Non-JSON response:', text.slice(0, 200));
+    return NextResponse.json({ error: 'Invalid response from Binance', raw: text.slice(0, 200) }, { status: 502 });
+  }
 
   if (!binanceRes.ok) {
     const errMsg = data.msg ?? 'Binance API error';
