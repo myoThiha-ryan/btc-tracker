@@ -2,6 +2,8 @@ import crypto from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { BINANCE_BASE, binanceHeaders } from '@/lib/binance';
 
+export const dynamic = 'force-dynamic';
+
 const REQUIRED_ENV = ['BINANCE_API_KEY', 'BINANCE_API_SECRET'] as const;
 
 function sign(queryString: string): string {

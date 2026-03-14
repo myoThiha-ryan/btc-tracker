@@ -2,6 +2,8 @@ import crypto from 'crypto';
 import { NextResponse } from 'next/server';
 import { BINANCE_BASE, binanceHeaders } from '@/lib/binance';
 
+export const dynamic = 'force-dynamic';
+
 function sign(queryString: string): string {
   return crypto
     .createHmac('sha256', process.env.BINANCE_API_SECRET!)
