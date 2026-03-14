@@ -24,19 +24,38 @@ export async function GET() {
   });
   params.append('signature', sign(params.toString()));
 
-  const res = await fetch(`${BINANCE_BASE}/api/v3/allOrders?${params.toString()}`, {
-    headers: binanceHeaders(process.env.BINANCE_API_KEY!),
-    cache: 'no-store',
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${BINANCE_BASE}/api/v3/allOrders?${params.toString()}`, {
+      headers: binanceHeaders(process.env.BINANCE_API_KEY!),
+      cache: 'no-store',
+    });
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : 'Network error reaching Binance';
+    console.error('[orders] Fetch error:', msg);
+    return NextResponse.json({ error: msg }, { status: 502 });
+  }
 
-  const data = await res.json() as BinanceOrder[] | { msg: string; code: number };
+  // Read as text first — prevents crash if body is empty or non-JSON
+  const text = await res.text();
+  if (!text) {
+    return NextResponse.json({ error: 'Empty response from Binance' }, { status: 502 });
+  }
+
+  let data: BinanceOrder[] | { msg: string; code: number };
+  try {
+    data = JSON.parse(text);
+  } catch {
+    console.error('[orders] Non-JSON response:', text.slice(0, 200));
+    return NextResponse.json({ error: 'Invalid response from Binance', raw: text.slice(0, 200) }, { status: 502 });
+  }
 
   if (!res.ok) {
     const err = data as { msg: string; code: number };
-    return NextResponse.json({ error: err.msg }, { status: 502 });
+    console.error('[orders] Binance error:', err.code, err.msg);
+    return NextResponse.json({ error: err.msg, code: err.code }, { status: 502 });
   }
 
-  // Return most recent first
   const orders = (data as BinanceOrder[]).reverse();
   return NextResponse.json({
     orders,

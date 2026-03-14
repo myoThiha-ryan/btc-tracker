@@ -43,7 +43,17 @@ export default function OrdersPanel() {
     setError(null);
     try {
       const res = await fetch('/api/orders');
-      const json = await res.json() as OrdersResponse & { error?: string };
+      const text = await res.text();
+
+      if (!text) throw new Error('Empty response from server');
+
+      let json: OrdersResponse & { error?: string; raw?: string };
+      try {
+        json = JSON.parse(text);
+      } catch {
+        throw new Error(`Server returned non-JSON response: ${text.slice(0, 100)}`);
+      }
+
       if (!res.ok) throw new Error(json.error ?? 'Failed to fetch orders');
       setData(json);
       setLastRefreshed(new Date());
