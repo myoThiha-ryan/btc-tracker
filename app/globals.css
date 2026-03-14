@@ -233,8 +233,7 @@ header span {
 
 .alert-list li {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   background: #0d1117;
   border: 1px solid #30363d;
   border-radius: 8px;
@@ -284,4 +283,101 @@ header span {
   padding: 0 4px;
   margin-left: 0.4rem;
   vertical-align: middle;
+}
+
+.sms-badge.buy {
+  background: #2ea04320;
+  color: #2ea043;
+  border-color: #2ea04360;
+}
+
+.sms-badge.sell {
+  background: #f8514920;
+  color: #f85149;
+  border-color: #f8514960;
+}
+
+/* ── Auto trade config ───────────────────────── */
+.trade-config {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.trade-config-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.trade-side-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.trade-side-badge.buy {
+  background: #2ea04325;
+  color: #2ea043;
+  border: 1px solid #2ea04360;
+}
+
+.trade-side-badge.sell {
+  background: #f8514925;
+  color: #f85149;
+  border: 1px solid #f8514960;
+}
+
+.trade-config-row input[type='number'] {
+  flex: 1;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #e6edf3;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85rem;
+}
+
+.trade-config-label {
+  font-size: 0.75rem;
+  color: #8b949e;
+  white-space: nowrap;
+}
+
+.trade-warning {
+  font-size: 0.75rem;
+  color: #f0b429;
+  margin-top: 0.5rem;
+}
+
+/* ── Alert list item ─────────────────────────── */
+.alert-item-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.order-result {
+  font-size: 0.78rem;
+  margin-top: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.order-result.success {
+  background: #2ea04315;
+  color: #2ea043;
+  border: 1px solid #2ea04330;
+}
+
+.order-result.error {
+  background: #f8514915;
+  color: #f85149;
+  border: 1px solid #f8514930;
 }

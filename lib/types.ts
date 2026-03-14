@@ -17,4 +17,16 @@ export interface Alert {
   price: number;
   triggered: boolean;
   smsEnabled: boolean;
+  autoTrade: boolean;
+  tradeAmount: string; // USDT amount as string to match input state
+  lastOrder?: OrderResult;
+}
+
+export interface OrderResult {
+  orderId: number;
+  status: string;
+  side: string;
+  executedQty: string;
+  cummulativeQuoteQty: string;
+  error?: string;
 }
